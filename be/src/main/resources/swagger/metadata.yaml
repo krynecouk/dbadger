@@ -1,0 +1,39 @@
+swagger: "2.0"
+info:
+  title: DB Metadata API
+  description: REST API to get database metadata.
+  version: 1.0.0
+host: localhost:8080
+basePath: /metadata
+schemes:
+  - http
+paths:
+  /{id}/schema:
+    get:
+      summary: Returns a list of db schemas.
+      produces:
+        - application/json
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "The id of db connection."
+          required: true
+          type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Schema"
+
+definitions:
+  Schema:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        example: "library"
+      owner:
+        type: "string"
+        example: "localhost"

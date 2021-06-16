@@ -118,7 +118,7 @@ definitions:
         example: "localhost"
       port:
         type: "integer"
-        format: "int64"
+        format: "int32"
         example: 5432
       databaseName:
         type: "string"

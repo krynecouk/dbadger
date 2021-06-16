@@ -1,0 +1,111 @@
+swagger: "2.0"
+info:
+  title: DB Connection API
+  description: REST API to get information about database connections.
+  version: 1.0.0
+host: localhost:8080
+basePath: /connection
+schemes:
+  - http
+paths:
+  /:
+    get:
+      summary: Returns a list of db connection.
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Connection"
+    post:
+      summary: Creates new db connection.
+      consumes:
+        - application/json
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "DB Connection to be created."
+          required: true
+          schema:
+            allOf:
+              - $ref: "#/definitions/Connection"
+            required:
+              - hostname
+              - databaseName
+              - username
+      responses:
+        '200':
+          description: Created.
+        '400':
+          description: Bad request.
+        '409':
+          description: Connection with provided id already exists.
+    put:
+      summary: Updates db connection.
+      consumes:
+        - application/json
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "DB Connection to be created."
+          required: true
+          schema:
+            allOf:
+              - $ref: "#/definitions/Connection"
+            required:
+              - id
+              - hostname
+              - databaseName
+              - username
+      responses:
+        '200':
+          description: Updated.
+        '400':
+          description: Bad request.
+        '404':
+          description: Connection with id was not found.
+  /{id}:
+    delete:
+      summary: "Deletes db connection."
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "The id of db connection that needs to be deleted."
+          required: true
+          type: "string"
+      responses:
+        '200':
+          description: Deleted.
+        '400':
+          description: Bad request.
+        '404':
+          description: Connection with id was not found.
+definitions:
+  Connection:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+        example: 12
+      name:
+        type: "string"
+        example: "employees"
+      hostname:
+        type: "string"
+        example: "localhost"
+      port:
+        type: "string"
+        example: "3301"
+      databaseName:
+        type: "string"
+        example: "db_employees"
+      username:
+        type: "string"
+        example: "admin"
+      password:
+        type: "string"
+        example: "admin"

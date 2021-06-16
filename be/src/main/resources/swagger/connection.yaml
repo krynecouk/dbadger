@@ -112,19 +112,20 @@ definitions:
         example: 12
       name:
         type: "string"
-        example: "employees"
+        example: "library"
       hostname:
         type: "string"
         example: "localhost"
       port:
-        type: "string"
-        example: "3301"
+        type: "integer"
+        format: "int64"
+        example: 5432
       databaseName:
         type: "string"
-        example: "db_employees"
+        example: "db_library"
       username:
         type: "string"
-        example: "admin"
+        example: "library_admin"
       password:
         type: "string"
-        example: "admin"
+        example: "library_admin"

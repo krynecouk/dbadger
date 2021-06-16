@@ -14,6 +14,15 @@ services:
       test: ["CMD-SHELL", "pg_isready -d dbadger -U dbr_admin"]
       interval: 5s
       start_period: 5s
+  swagger:
+    image: swaggerapi/swagger-ui
+    environment:
+      - API_URL=http://localhost:8080/connection/docs
+    ports:
+      - 80:8080
+    #depends_on:
+    #  - dbadger
+
 networks:
   default:
     name: dbadger_network

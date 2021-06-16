@@ -20,7 +20,9 @@ E.g. If you choose the MySQL database, you should persist at least the following
 - port - port where the database runs
 - databaseName - name of the database
 - username - username for connecting to the database
-- password - password for connecting to the database Connection details themselves should be stored in database of your choice.
+- password - password for connecting to the database 
+  
+Connection details themselves should be stored in database of your choice.
 
 ### Task 2
 Design and implement REST API for browsing structure and data using your stored database connections from Task 1. Your API should support the following operations:
@@ -28,12 +30,9 @@ Design and implement REST API for browsing structure and data using your stored 
 - Listing schemas (if your selected database supports them)
 - Listing tables
 - Listing columns
-- Data preview of the table Resources should contain as much information you can find (data type, if it is primary key, etc.).
-
-Bonus tasks: Design and implement REST API endpoints for statistics:
-- Single endpoint for statistics about each column: min, max, avg, median value of the column.
-- Single endpoint for statistics about each table: number of records, number of attributes.
-- Document this REST API
+- Data preview of the table 
+  
+Resources should contain as much information you can find (data type, if it is primary key, etc.).
 
 ### Bonus Tasks
 Design and implement REST API endpoints for statistics:
@@ -41,5 +40,3 @@ Design and implement REST API endpoints for statistics:
 - Single endpoint for statistics about each column: min, max, avg, median value of the column.
 - Single endpoint for statistics about each table: number of records, number of attributes.
 - Document this REST API
-
-

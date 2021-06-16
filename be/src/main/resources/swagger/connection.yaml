@@ -66,8 +66,27 @@ paths:
         '400':
           description: Bad request.
         '404':
-          description: Connection with id was not found.
+          description: Connection was not found.
   /{id}:
+    get:
+      summary: Returns a db connection.
+      produces:
+        - application/json
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "The id of db connection."
+          required: true
+          type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Connection"
+        '400':
+          description: Bad request.
+        '404':
+          description: Connection  was not found.
     delete:
       summary: "Deletes db connection."
       parameters:
@@ -82,7 +101,7 @@ paths:
         '400':
           description: Bad request.
         '404':
-          description: Connection with id was not found.
+          description: Connection was not found.
 definitions:
   Connection:
     type: "object"

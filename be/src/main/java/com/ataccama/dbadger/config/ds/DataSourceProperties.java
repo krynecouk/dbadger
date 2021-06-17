@@ -5,4 +5,5 @@ import org.springframework.boot.context.properties.ConstructorBinding;
 
 @ConstructorBinding
 @ConfigurationProperties(prefix = "spring.datasource")
-public record DataSourceProperties(String url, String username, String password) {}
+public record DataSourceProperties(String url, String username, String password) {
+}

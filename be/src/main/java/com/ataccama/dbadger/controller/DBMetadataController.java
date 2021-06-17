@@ -26,7 +26,7 @@ public class DBMetadataController {
     @GetMapping(path = "/schemas")
     public List<DBSchema> getAllSchemas(@PathVariable Long id) {
         Assert.notNull(id, "id must not be null");
-       return metadataService.findAllSchemas();
+        return metadataService.findAllSchemas();
     }
 
     @GetMapping(path = "/tables")

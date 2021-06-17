@@ -35,7 +35,7 @@ public class PGConnectionService implements DBConnectionService {
 
     @Override
     public void update(Long id, DBConnection connection) {
-       repository.update(id, connection);
+        repository.update(id, connection);
     }
 
     @Override

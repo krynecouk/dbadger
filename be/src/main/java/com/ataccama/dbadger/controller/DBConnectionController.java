@@ -30,7 +30,7 @@ public class DBConnectionController {
 
     @GetMapping
     public List<DBConnection> findAll() {
-       return connectionService.findAll();
+        return connectionService.findAll();
     }
 
     @GetMapping(path = "/{id}")

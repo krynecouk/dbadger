@@ -32,7 +32,7 @@ public class DataSourceInterceptor implements HandlerInterceptor {
         var connection = connectionService.find(id);
         DBConnectionContextHolder.set(connection);
 
-        var ds =  dsRouting.getResolvedDataSources().get(connection);
+        var ds = dsRouting.getResolvedDataSources().get(connection);
         if (ds == null) {
             ds = dsFactory.create(connection);
             dsRouting.put(connection, ds);

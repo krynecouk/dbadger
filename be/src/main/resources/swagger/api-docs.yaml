@@ -10,20 +10,20 @@ schemes:
 paths:
   /:
     get:
-      summary: Returns an array of db connections.
+      summary: "Returns an array of DB connections."
       tags:
         - Connection
       produces:
         - application/json
       responses:
         "200":
-          description: "successful operation"
+          description: "An array of DB connections."
           schema:
             type: "array"
             items:
               $ref: "#/definitions/Connection"
     post:
-      summary: Creates new db connection.
+      summary: "Creates a new DB connection."
       tags:
         - Connection
       consumes:
@@ -39,16 +39,17 @@ paths:
             required:
               - hostname
               - databaseName
+              - port
               - username
       responses:
         '200':
-          description: Created.
+          description: "Created."
         '400':
-          description: Bad request.
+          description: "Bad request."
         '409':
-          description: Connection with provided id already exists.
+          description: "Connection with provided id already exists."
     put:
-      summary: Updates db connection.
+      summary: "Updates a DB connection."
       tags:
         - Connection
       consumes:
@@ -65,17 +66,18 @@ paths:
               - id
               - hostname
               - databaseName
+              - port
               - username
       responses:
         '200':
-          description: Updated.
+          description: "Updated."
         '400':
-          description: Bad request.
+          description: "Bad request."
         '404':
-          description: Connection was not found.
+          description: "Connection was not found."
   /{id}:
     get:
-      summary: Returns a db connection.
+      summary: "Returns a DB connection."
       tags:
         - Connection
       produces:
@@ -83,38 +85,38 @@ paths:
       parameters:
         - name: "id"
           in: "path"
-          description: "The id of db connection."
+          description: "The id of DB connection."
           required: true
           type: "string"
       responses:
         "200":
-          description: "successful operation"
+          description: "A DB connection"
           schema:
             $ref: "#/definitions/Connection"
         '400':
-          description: Bad request.
+          description: "Bad request."
         '404':
-          description: Connection  was not found.
+          description: "Connection was not found."
     delete:
-      summary: "Deletes db connection."
+      summary: "Deletes a DB connection."
       tags:
         - Connection
       parameters:
         - name: "id"
           in: "path"
-          description: "The id of db connection that needs to be deleted."
+          description: "The id of DB connection that needs to be deleted."
           required: true
           type: "string"
       responses:
         '200':
-          description: Deleted.
+          description: "Deleted."
         '400':
-          description: Bad request.
+          description: "Bad request."
         '404':
-          description: Connection was not found.
+          description: "Connection was not found."
   /{id}/metadata/schemas:
     get:
-      summary: Returns a list of db schemas.
+      summary: "Returns an array of DB schemas."
       tags:
         - Metadata
       produces:
@@ -122,20 +124,105 @@ paths:
       parameters:
         - name: "id"
           in: "path"
-          description: "The id of db connection."
+          description: "The id of DB connection."
           required: true
           type: "string"
       responses:
         "200":
-          description: "successful operation"
+          description: "An array of DB schemas."
           schema:
             type: "array"
             items:
               $ref: "#/definitions/Schema"
         '400':
-          description: Bad request.
+          description: "Bad request."
         '404':
-          description: Connection was not found.
+          description: "Connection was not found."
+  /{id}/metadata/tables:
+    get:
+      summary: "Returns an array of DB tables."
+      tags:
+        - Metadata
+      produces:
+        - application/json
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "The id of DB connection."
+          required: true
+          type: "string"
+      responses:
+        "200":
+          description: "An array of DB tables."
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Table"
+        '400':
+          description: "Bad request."
+        '404':
+          description: "Connection was not found."
+  /{id}/metadata/tables/{name}/columns:
+    get:
+      summary: "Returns an array of DB table columns."
+      tags:
+        - Metadata
+      produces:
+        - application/json
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "The id of DB connection."
+          required: true
+          type: "string"
+        - name: "name"
+          in: "path"
+          description: "The name of DB table."
+          required: true
+          type: "string"
+      responses:
+        "200":
+          description: "An array of table columns."
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Column"
+        '400':
+          description: "Bad request."
+        '404':
+          description: "Connection or table name was not found."
+  /{id}/data/tables/{name}:
+    get:
+      summary: "Returns data from table."
+      tags:
+        - Data
+      produces:
+        - application/json
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "The id of DB connection."
+          required: true
+          type: "string"
+        - name: "name"
+          in: "path"
+          description: "The name of DB table."
+          required: true
+          type: "string"
+        - name: "limit"
+          in: "query"
+          description: "Max number of results to be returned. Default is 10."
+          required: false
+          type: "integer"
+      responses:
+        "200":
+          description: "An array of data."
+          schema:
+            type: object
+        '400':
+          description: "Bad request."
+        '404':
+          description: "Connection was not found."
 definitions:
   Connection:
     type: "object"
@@ -168,7 +255,29 @@ definitions:
     properties:
       name:
         type: "string"
-        example: "library"
+        example: "public"
       owner:
         type: "string"
-        example: "localhost"
+        example: "dbr_admin"
+  Table:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        example: "books"
+      owner:
+        type: "string"
+        example: "dbr_admin"
+  Column:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        example: "id"
+      position:
+        type: "integer"
+        format: "int32"
+        example: "2"
+      nullable:
+        type: "boolean"
+        example: false

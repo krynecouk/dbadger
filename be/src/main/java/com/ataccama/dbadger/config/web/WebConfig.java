@@ -1,5 +1,6 @@
-package com.ataccama.dbadger.config;
+package com.ataccama.dbadger.config.web;
 
+import com.ataccama.dbadger.config.ds.DataSourceInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -17,7 +18,9 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(dataSourceInterceptor).addPathPatterns("/metadata/**");
+        registry.addInterceptor(dataSourceInterceptor).addPathPatterns(
+                "/connections/*/metadata/**",
+                "/connections/*/data/**");
         WebMvcConfigurer.super.addInterceptors(registry);
     }
 }

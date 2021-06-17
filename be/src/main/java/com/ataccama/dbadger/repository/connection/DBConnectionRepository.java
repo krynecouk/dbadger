@@ -15,6 +15,5 @@ public interface DBConnectionRepository {
 
     void update(long id, DBConnection connection);
 
-    void remove(long id);
-
+    boolean remove(long id);
 }

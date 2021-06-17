@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,12 +13,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class PsqlConnectionRepository implements DBConnectionRepository {
+@Transactional
+public class PGConnectionRepository implements DBConnectionRepository {
     private final JdbcTemplate jdbcTemplate;
     private final RowMapper<DBConnection> mapper;
 
     @Autowired
-    public PsqlConnectionRepository(JdbcTemplate jdbcTemplate) {
+    public PGConnectionRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
         this.mapper = new DBConnectionMapper();
     }
@@ -30,7 +32,8 @@ public class PsqlConnectionRepository implements DBConnectionRepository {
 
     @Override
     public Optional<DBConnection> find(long id) {
-        return Optional.empty();
+        var sql = "select * from connection where id = ?";
+        return Optional.ofNullable(jdbcTemplate.queryForObject(sql, mapper, id));
     }
 
     @Override
@@ -53,8 +56,8 @@ public class PsqlConnectionRepository implements DBConnectionRepository {
     @Override
     public void update(long id, DBConnection connection) {
         var sql = """
-                insert into connection values
-                (?, ?, ?, ?, ?, ?, ?)
+                update connection set id = ?, name = ?, hostname = ?, port = ?, databaseName = ?, username = ?, password = ?
+                where id = ?
                 """;
         jdbcTemplate.update(
                 sql,
@@ -64,12 +67,15 @@ public class PsqlConnectionRepository implements DBConnectionRepository {
                 connection.port(),
                 connection.databaseName(),
                 connection.username(),
-                connection.password());
+                connection.password(),
+                connection.id()
+        );
     }
 
     @Override
-    public void remove(long id) {
-
+    public boolean remove(long id) {
+        var sql = "delete from connection where id = ?";
+        return jdbcTemplate.update(sql, id) == 1;
     }
 }
 

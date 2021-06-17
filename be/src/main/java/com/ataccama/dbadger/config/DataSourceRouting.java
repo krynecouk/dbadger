@@ -17,7 +17,7 @@ public class DataSourceRouting extends AbstractRoutingDataSource {
         map.put(sessionId, ds);
         this.setTargetDataSources(map);
     }
-    
+
     protected void remove(String sessionId) {
         var map = new ConcurrentHashMap<Object, Object>(this.getResolvedDataSources());
         map.remove(sessionId);

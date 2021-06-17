@@ -1,16 +1,18 @@
 swagger: "2.0"
 info:
-  title: DB Connection API
-  description: REST API to get information about database connections.
+  title: DBadger API
+  description: Documentation of DBadger REST API.
   version: 1.0.0
 host: localhost:8080
-basePath: /connection
+basePath: /connections
 schemes:
   - http
 paths:
   /:
     get:
-      summary: Returns a list of db connection.
+      summary: Returns an array of db connections.
+      tags:
+        - Connection
       produces:
         - application/json
       responses:
@@ -22,6 +24,8 @@ paths:
               $ref: "#/definitions/Connection"
     post:
       summary: Creates new db connection.
+      tags:
+        - Connection
       consumes:
         - application/json
       parameters:
@@ -45,6 +49,8 @@ paths:
           description: Connection with provided id already exists.
     put:
       summary: Updates db connection.
+      tags:
+        - Connection
       consumes:
         - application/json
       parameters:
@@ -70,6 +76,8 @@ paths:
   /{id}:
     get:
       summary: Returns a db connection.
+      tags:
+        - Connection
       produces:
         - application/json
       parameters:
@@ -89,6 +97,8 @@ paths:
           description: Connection  was not found.
     delete:
       summary: "Deletes db connection."
+      tags:
+        - Connection
       parameters:
         - name: "id"
           in: "path"
@@ -98,6 +108,30 @@ paths:
       responses:
         '200':
           description: Deleted.
+        '400':
+          description: Bad request.
+        '404':
+          description: Connection was not found.
+  /{id}/metadata/schemas:
+    get:
+      summary: Returns a list of db schemas.
+      tags:
+        - Metadata
+      produces:
+        - application/json
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "The id of db connection."
+          required: true
+          type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Schema"
         '400':
           description: Bad request.
         '404':
@@ -129,3 +163,12 @@ definitions:
       password:
         type: "string"
         example: "library_admin"
+  Schema:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        example: "library"
+      owner:
+        type: "string"
+        example: "localhost"

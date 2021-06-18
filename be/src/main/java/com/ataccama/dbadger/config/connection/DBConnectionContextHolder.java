@@ -1,4 +1,4 @@
-package com.ataccama.dbadger.config.ds;
+package com.ataccama.dbadger.config.connection;
 
 import com.ataccama.dbadger.domain.DBConnection;
 

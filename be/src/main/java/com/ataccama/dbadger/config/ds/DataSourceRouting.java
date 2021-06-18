@@ -1,5 +1,6 @@
 package com.ataccama.dbadger.config.ds;
 
+import com.ataccama.dbadger.config.connection.DBConnectionContextHolder;
 import com.ataccama.dbadger.domain.DBConnection;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 
@@ -20,7 +21,7 @@ public class DataSourceRouting extends AbstractRoutingDataSource {
         this.afterPropertiesSet();
     }
 
-    synchronized protected void remove(DBConnection connection) {
+    synchronized public void remove(DBConnection connection) {
         var map = new HashMap<Object, Object>(this.getResolvedDataSources());
         map.remove(connection);
         this.setTargetDataSources(map);

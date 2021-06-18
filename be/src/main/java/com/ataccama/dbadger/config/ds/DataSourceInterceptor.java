@@ -1,5 +1,7 @@
 package com.ataccama.dbadger.config.ds;
 
+import com.ataccama.dbadger.config.connection.DBConnectionContextHolder;
+import com.ataccama.dbadger.config.connection.DBConnectionLog;
 import com.ataccama.dbadger.factory.DataSourceFactory;
 import com.ataccama.dbadger.service.connection.DBConnectionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,14 +16,15 @@ import java.util.Optional;
 
 @Component
 public class DataSourceInterceptor implements HandlerInterceptor {
-
     private final DBConnectionService connectionService;
+    private final DBConnectionLog connectionLog;
     private final DataSourceRouting dsRouting;
     private final DataSourceFactory dsFactory;
 
     @Autowired
-    public DataSourceInterceptor(DBConnectionService connectionService, DataSourceRouting dsRouting, DataSourceFactory dsFactory) {
+    public DataSourceInterceptor(DBConnectionService connectionService, DBConnectionLog connectionLog, DataSourceRouting dsRouting, DataSourceFactory dsFactory) {
         this.connectionService = connectionService;
+        this.connectionLog = connectionLog;
         this.dsRouting = dsRouting;
         this.dsFactory = dsFactory;
     }
@@ -36,8 +39,8 @@ public class DataSourceInterceptor implements HandlerInterceptor {
         if (ds == null) {
             ds = dsFactory.create(connection);
             dsRouting.put(connection, ds);
-            // todo log
         }
+        connectionLog.put(connection);
         return HandlerInterceptor.super.preHandle(request, response, handler);
     }
 

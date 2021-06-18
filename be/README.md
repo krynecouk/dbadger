@@ -17,7 +17,7 @@ specified, you can use whatever technologies/frameworks you like. Non-functional
 
 1. go to `/env` and run`docker-compose up` (PostgreSQL and SwaggerUI)
 2. go to `/be` and run `./gradlew bootRun` (DBadger)
-3. go to `localhost:80`
+3. go to `localhost:80` and try it out
 
 ## TODO
 

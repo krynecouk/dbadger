@@ -34,4 +34,26 @@
                           startWith="0"
         />
     </changeSet>
+
+    <!-- TODO add test profile or flag -->
+    <changeSet author="dkr" id="insert-testing-data" >
+        <insert tableName="connection">
+            <column name="id" value="1"/>
+            <column name="name" value="library"/>
+            <column name="hostname" value="localhost"/>
+            <column name="port" value="5432"/>
+            <column name="databaseName" value="library"/>
+            <column name="username" value="library_admin"/>
+            <column name="password" value="library_admin"/>
+        </insert>
+        <insert tableName="connection">
+            <column name="id" value="2"/>
+            <column name="name" value="school"/>
+            <column name="hostname" value="localhost"/>
+            <column name="port" value="5432"/>
+            <column name="databaseName" value="school"/>
+            <column name="username" value="school_admin"/>
+            <column name="password" value="school_admin"/>
+        </insert>
+    </changeSet>
 </databaseChangeLog>
